@@ -1,0 +1,229 @@
+{
+  "kind": "form",
+  "id": "character",
+  "title": "Personagem",
+  "elements": [
+    {
+      "elementType": "tab",
+      "tabs": [
+        {
+          "id": "mainData",
+          "title": "Dados principais",
+          "elements": [
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Nome",
+              "name": "name",
+              "placeholder": "Ex: Bart Simpson",
+              "isRequired": true
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Apelido",
+              "placeholder": "Apelido do personagem",
+              "name": "nickname"
+            },
+            {
+              "elementType": "autocomplete",
+              "dataType": "text",
+              "label": "Animação",
+              "placeholder": "Animação a qual pertence",
+              "name": "animationId",
+              "optionsApi": {
+                "endpoint": "animations",
+                "labelField": "name",
+                "valueField": "_id",
+                "paramsToFilter": ["name"],
+                "paramType": "query"
+              },
+              "isRequired": true
+            },
+            {
+              "elementType": "file",
+              "dataType": "text",
+              "label": "Imagem",
+              "placeholder": "Imagem do personagem",
+              "name": "img"
+            },
+            {
+              "elementType": "select",
+              "dataType": "text",
+              "label": "Tipo",
+              "name": "characterType",
+              "optionsObject": [
+                {
+                  "label": "Humano",
+                  "value": "human"
+                },
+                {
+                  "label": "Animal",
+                  "value": "animal"
+                },
+                {
+                  "label": "Extraterrestre",
+                  "value": "extraterrestrial"
+                },
+                {
+                  "label": "Outro",
+                  "value": "other"
+                }
+              ],
+              "isTriggerToCondition": true
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Tipo de animal",
+              "placeholder": "Ex: Cachorro, Gato, Coelho",
+              "name": "animalType",
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "characterType",
+                    "value": "animal"
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Planeta",
+              "placeholder": "Planeta de origem",
+              "name": "extraterrestrialPlanet",
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "characterType",
+                    "value": "extraterrestrial"
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Descrição",
+              "placeholder": "Ex: Demônio, Anjo, Ideia",
+              "name": "otherType",
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "characterType",
+                    "value": "other"
+                  }
+                ]
+              }
+            },
+            {
+              "elementType": "select",
+              "dataType": "text",
+              "label": "Sexo",
+              "name": "sex",
+              "optionsObject": [
+                {
+                  "label": "Homem",
+                  "value": "man"
+                },
+                {
+                  "label": "Mulher",
+                  "value": "woman"
+                },
+                {
+                  "label": "Homem transsexual",
+                  "value": "transman"
+                },
+                {
+                  "label": "Mulher transsexual",
+                  "value": "transwoman"
+                },
+                {
+                  "label": "Outro",
+                  "value": "other"
+                }
+              ],
+              "conditions": {
+                "type": "form",
+                "elements": [
+                  {
+                    "key": "characterType",
+                    "value": "human"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "otherData",
+          "title": "Outros dados",
+          "elements": [
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "História",
+              "placeholder": "História do personagem",
+              "name": "history",
+              "isMultipleLines": true
+            },
+            {
+              "elementType": "array",
+              "title": "Dado genérico",
+              "id": "genericDataArray",
+              "elements": [
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "Atributo",
+                  "name": "genericAttribute",
+                  "placeholder": "Ex: gender",
+                  "tooltip": "Um atributo qualquer para melhor especificar a personagem"
+                },
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "Valor",
+                  "name": "genericValue",
+                  "placeholder": "Ex: Masculino",
+                  "tooltip": "Um valor qualquer acerca do atributo pré definido"
+                },
+                {
+                  "elementType": "autocomplete",
+                  "dataType": "text",
+                  "label": "Outras animações",
+                  "name": "otherAnimations",
+                  "optionsApi": {
+                    "endpoint": "animations",
+                    "labelField": ["name", "_id"],
+                    "valueField": "_id",
+                    "paramsToFilter": ["name"],
+                    "paramType": "query"
+                  },
+                  "isMultiple": true
+                },
+                {
+                  "elementType": "autocomplete",
+                  "dataType": "text",
+                  "label": "Outro personagem",
+                  "name": "otherCharacter",
+                  "optionsApi": {
+                    "endpoint": "characters",
+                    "labelField": ["name"],
+                    "valueField": "_id",
+                    "paramsToFilter": ["name"],
+                    "paramType": "query"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

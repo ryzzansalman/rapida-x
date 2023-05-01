@@ -1,0 +1,106 @@
+{
+  "kind": "form",
+  "id": "animation",
+  "title": "Animação",
+  "elements": [
+    {
+      "elementType": "tab",
+      "tabs": [
+        {
+          "title": "Dados principais",
+          "elements": [
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Nome",
+              "name": "name",
+              "placeholder": "Nome da animação",
+              "isRequired": true
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Foto de capa",
+              "name": "folderPicture"
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Data de criação",
+              "name": "startDate",
+              "isRequired": true
+            },
+            {
+              "elementType": "input",
+              "dataType": "text",
+              "label": "Data de finalização",
+              "name": "finishDate"
+            }
+          ]
+        },
+        {
+          "id": "seasonAndEpisodeTab",
+          "title": "Temporadas e episódios",
+          "elements": [
+            {
+              "elementType": "array",
+              "title": "Temporada",
+              "id": "seasons",
+              "elements": [
+                {
+                  "elementType": "input",
+                  "dataType": "text",
+                  "label": "Resumo",
+                  "name": "seasonBrief",
+                  "isMultipleLines": true
+                },
+                {
+                  "elementType": "array",
+                  "title": "Episódio",
+                  "id": "episodes",
+                  "elements": [
+                    {
+                      "elementType": "input",
+                      "dataType": "text",
+                      "label": "Título",
+                      "name": "episodeTitle",
+                      "isRequired": true
+                    },
+                    {
+                      "elementType": "input",
+                      "dataType": "text",
+                      "label": "Resumo",
+                      "name": "episodeBrief",
+                      "isMultipleLines": true
+                    },
+                    {
+                      "elementType": "input",
+                      "dataType": "file",
+                      "label": "Foto ilustrativa",
+                      "name": "episodePicture"
+                    },
+                    {
+                      "autocomplete": {
+                        "label": "Personagem principal do episódio",
+                        "name": "episodeCharacters",
+                        "type": "text",
+                        "optionsApi": {
+                          "labelField": "name",
+                          "valueField": "_id",
+                          "paramsToFilter": ["name"],
+                          "endpoint": "characters",
+                          "paramType": "query"
+                        },
+                        "isMultiple": true
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
