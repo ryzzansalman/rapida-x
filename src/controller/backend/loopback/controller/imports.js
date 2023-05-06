@@ -1,8 +1,8 @@
-import { TextTransformation } from "kunlatek-utils";
+import * as utils from "kunlatek-utils";
 
 export const createControllerImports = (object) => {
   const entityName = object.id;
-  const modelName = TextTransformation.pascalfy(entityName);
+  const modelName = utils.pascalfy(entityName);
 
   let code = `
   import {authenticate} from '@loopback/authentication';
@@ -13,7 +13,7 @@ export const createControllerImports = (object) => {
   import {I${modelName}} from '../../domain/entities';
   import {I${modelName}Repository} from '../../domain/repositories';
   import {${modelName}Repository} from '../../repositories';
-  import {${entityName}Schema} from '../../repositories/mongo/api/schemas/${TextTransformation.kebabfy(entityName)}.schema';
+  import {${entityName}Schema} from '../../repositories/mongo/api/schemas/${utils.kebabfy(entityName)}.schema';
   import {getSwaggerRequestBodySchema, getSwaggerResponseSchema} from '../../utils/general.util';
   import {IHttpResponse, badRequestErrorHttpResponse, createHttpResponse, notFoundErrorHttpResponse, okHttpResponse} from '../../utils/http-response.util';
   

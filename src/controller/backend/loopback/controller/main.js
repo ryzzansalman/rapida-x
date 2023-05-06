@@ -3,7 +3,7 @@ import * as fs from "fs";
 import { createControllerImports } from "./imports";
 import { createControllerConstructorParams } from "./constructor-params";
 import { createControllerMethods } from "./methods";
-import { TextTransformation } from "kunlatek-utils";
+import * as utils from "kunlatek-utils";
 
 const controllerMain = (object, projectPath) => {
   const controllerName = object.id;
@@ -14,7 +14,7 @@ const controllerMain = (object, projectPath) => {
   let code = `
   ${_imports}
 
-  export class ${TextTransformation.pascalfy(controllerName)}Controller {  
+  export class ${utils.pascalfy(controllerName)}Controller {  
     constructor(
       ${_constructorParams}
     ) { }
@@ -36,7 +36,7 @@ const controllerMain = (object, projectPath) => {
  */
 const setControllerArchitectureAndWriteToFile = (object, code, projectPath) => {
   try {
-    const componentFilePath = `${projectPath}-api/src/controllers/api/${TextTransformation.kebabfy(object.id)}.controller.ts`;
+    const componentFilePath = `${projectPath}-api/src/controllers/api/${utils.kebabfy(object.id)}.controller.ts`;
     const componentIndexFilePath = `${projectPath}-api/src/controllers/index.ts`;
 
     fs.writeFileSync(
@@ -47,13 +47,13 @@ const setControllerArchitectureAndWriteToFile = (object, code, projectPath) => {
   
     fs.appendFile(
       componentIndexFilePath, 
-      `export * from './api/${TextTransformation.kebabfy(object.id)}.controller';`, () => { },
+      `export * from './api/${utils.kebabfy(object.id)}.controller';`, () => { },
       { flag: 'w' }
     );
   
-    console.info(`Controller ${TextTransformation.kebabfy(object.id)} created successfully.`);
+    console.info(`Controller ${utils.kebabfy(object.id)} created successfully.`);
   } catch (err) {
-    console.error(`Create controller ${TextTransformation.kebabfy(object.id)} error: ${err.message}`);
+    console.error(`Create controller ${utils.kebabfy(object.id)} error: ${err.message}`);
   }
 };
 
