@@ -1,8 +1,8 @@
-import { 
+const { 
   getAllElements,
-} from "../../../utils.backend";
+} = require("../../../utils.backend");
 
-export const createConstructor = (object) => {
+const createConstructor = (object) => {
   let code = `
     this._id = entity._id;
     this._createdBy = entity._createdBy;
@@ -17,3 +17,7 @@ export const createConstructor = (object) => {
 
   return code;
 };
+
+module.exports = {
+  createConstructor
+}

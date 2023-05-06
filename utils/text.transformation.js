@@ -1,7 +1,6 @@
 const pluralize = require("pluralize");
 
-export class TextTransformation {
-  static pascalfy(text: string): string {
+  function pascalfy(text) {
 
     let textArray = text.split(' ');
     textArray.forEach((term, termIndex) => {
@@ -13,10 +12,10 @@ export class TextTransformation {
     return pascalCase;
   }
 
-  static kebabfy(text: string): string {
+  function kebabfy(text) {
     const kebabCase = text
       .split('')
-      .map((letter: string, idx: number) => {
+      .map((letter, idx) => {
         return letter.toUpperCase() === letter
           ? `${idx !== 0 ? '-' : ''}${letter.toLowerCase()}`
           : letter;
@@ -25,15 +24,15 @@ export class TextTransformation {
     return kebabCase;
   }
 
-  static plurarize(text: string): string {
+  function plurarize(text) {
     return pluralize(text);
   }
 
-  static singularize(text: string): string {
+  function singularize(text) {
     return pluralize.singular(text);
   }
 
-  static replaceKebabfyFunctionToString(template: string): string {
+  function replaceKebabfyFunctionToString(template) {
     const regex = /\%kebabfy(.*?)%/g;
     const foundKebabfies = template.match(regex);
 
@@ -54,7 +53,7 @@ export class TextTransformation {
     return template;
   }
 
-  static replacePascalfyFunctionToString(template: string): string {
+  function replacePascalfyFunctionToString(template) {
     const regex = /\%pascalfy(.*?)%/g;
     const foundPascalfies = template.match(regex);
 
@@ -74,7 +73,7 @@ export class TextTransformation {
     return template;
   }
 
-  static replacePlurarizeFunctionToString(string: string): string {
+  function replacePlurarizeFunctionToString(string) {
     const regex = /\%pluralize(.*?)%/g;
     const foundPluralizes = string.match(regex);
 
@@ -94,7 +93,7 @@ export class TextTransformation {
     return string;
   }
   // TO-DO: CHECK IF IT IS STILL NECESSARY
-  static setIdToPropertyName(id: string): string {
+  function setIdToPropertyName(id) {
     let propertyName = '';
     const array = id.split('-');
     propertyName += array[0].toLowerCase();
@@ -108,7 +107,7 @@ export class TextTransformation {
     return propertyName;
   }
 
-  static setIdToClassName(id: string): string {
+  function setIdToClassName(id) {
     let className = '';
     const array = id.split('-');
     className += array[0].charAt(0).toUpperCase() + array[0].slice(1);
@@ -122,11 +121,23 @@ export class TextTransformation {
     return className;
   }
 
-  static capitalization(term: string): string {
+  function capitalization(term) {
     return term
       .replace(/([A-Z])/g, '$1')
-      .replace(/^./, function (str: string) {
+      .replace(/^./, function (str) {
         return str.toUpperCase();
       });
   }
+
+module.exports = {
+  pascalfy,
+  kebabfy,
+  plurarize,
+  singularize,
+  replaceKebabfyFunctionToString,
+  replacePascalfyFunctionToString,
+  replacePlurarizeFunctionToString,
+  setIdToPropertyName,
+  setIdToClassName,
+  capitalization,
 }

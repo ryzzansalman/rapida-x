@@ -1,14 +1,15 @@
 const path = require('path');
 const fs = require('fs');
-const utils = require("../../../../../../Utils/index");
+const {
+  createArrayOverFolderFiles
+} = require("../../../../utils/array");
 const projectsPath = path.join(__dirname, "..", "..", "..", "..", "project");
-const {createCodeOverElement} = require("./form/index");
+// const {createCodeOverElement} = require("./form/index");
 
 const startLoopbackCoding = async (project) => {
-  const filesInProjectFolderToSetParams = utils.array.createArrayOverFolderFiles(
+  const filesInProjectFolderToSetParams = createArrayOverFolderFiles(
     `${projectsPath}/${project.folder}`
   );
-
   await takeObject(project, filesInProjectFolderToSetParams);
 }
 
@@ -23,17 +24,29 @@ takeObject = (project, filesInProjectFolderToSetParams) => {
 }
 
 takeElements = async (project, object) => {
+  if (object.kind !== 'form') {
+    console.info("Only forms set here");
+    return ``;
+  }
+  
   for (const key in object) {
     if (Object.hasOwnProperty.call(object, key)) {
       if (key === "elements") {
         const elements = object[key];
         elements.forEach(element => {
-          createCodeOverElement(project,element)
+          console.log(element)
+          // createCodeOverElement(project,element)
         });
       }
     }
   }
 }
+
+startLoopbackCoding({
+  folder: "animation",
+  title: "Animação",
+  ui: "material"
+})
 
 module.exports = {
   startLoopbackCoding

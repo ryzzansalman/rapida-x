@@ -1,26 +1,23 @@
-import { TextTransformation } from "../../../../utils/text.transformation";
-import { 
+const {
+  pascalfy
+} = require("../../../../../../utils/text.transformation");
+const { 
   getAllElements,
   booleanTypes,
   numberTypes,
   stringTypes,
-} from "../../../utils.backend";
+} = require("../../../utils.backend");
 
 /**
  * Return domain entity interface code
  * @param   {object}  object  Form object
  * @returns {string}          Domain entity interface code
  */
-export const createEntityInterfaces = (object) => {
-  if (object.kind !== 'form') {
-    console.info("Only forms set here");
-    return ``;
-  }
-
+const createEntityInterfaces = (object) => {
   const modelName = object.id;
 
   let code = `
-  export interface I${TextTransformation.pascalfy(modelName)} {
+  export interface I${pascalfy(modelName)} {
     _id?: string
     _createdBy: string
     _ownerId: string
@@ -74,3 +71,7 @@ const createPropertyByElement = (element) => {
 
   return code;
 };
+
+module.exports = {
+  createEntityInterfaces
+}

@@ -1,8 +1,11 @@
-import * as fs from "fs";
-import { TextTransformation } from "../../../../../../utils/text.transformation";
-import { createConstructor } from "./constructor";
-import { createEntityInterfaces } from "./interfaces";
-import { createEntityProperties } from "./properties";
+const fs = require("fs");
+const { 
+  pascalfy,
+  kebabfy,
+} = require("../../../../../../utils/text.transformation");
+const { createConstructor } = require("./constructor");
+const { createEntityInterfaces } = require("./interfaces");
+const { createEntityProperties } = require("./properties");
 
 const entityMain = (object, projectPath) => {
   const entityName = object.id;
@@ -14,11 +17,11 @@ const entityMain = (object, projectPath) => {
   let code = `
   ${_interface}
 
-  export class ${TextTransformation.pascalfy(entityName)} {  
+  export class ${pascalfy(entityName)} {  
 
     ${_properties}
 
-    constructor(entity: I${TextTransformation.pascalfy(entityName)}){
+    constructor(entity: I${pascalfy(entityName)}){
       ${_constructorParams}
     }
   }
@@ -37,7 +40,7 @@ const entityMain = (object, projectPath) => {
  */
 const setDomainEntityArchitectureAndWriteToFile = (object, code, projectPath) => {
   try {
-    const componentFilePath = `${projectPath}-api/src/domain/entities/api/${TextTransformation.kebabfy(object.id)}.model.ts`;
+    const componentFilePath = `${projectPath}-api/src/domain/entities/api/${kebabfy(object.id)}.model.ts`;
     const componentIndexFilePath = `${projectPath}-api/src/domain/entities/api/index.ts`;
   
     fs.writeFileSync(
@@ -48,14 +51,16 @@ const setDomainEntityArchitectureAndWriteToFile = (object, code, projectPath) =>
   
     fs.appendFile(
       componentIndexFilePath, 
-      `export * from './${TextTransformation.kebabfy(object.id)}.model';`, () => { },
+      `export * from './${kebabfy(object.id)}.model';`, () => { },
       { flag: 'w' }
     );
   
-    console.info(`Domain entity ${TextTransformation.kebabfy(object.id)} created successfully.`);
+    console.info(`Domain entity ${kebabfy(object.id)} created successfully.`);
   } catch(err) {
-    console.error(`Create domain entity ${TextTransformation.kebabfy(object.id)} error: ${err.message}`);
+    console.error(`Create domain entity ${kebabfy(object.id)} error: ${err.message}`);
   }
 };
 
-export { entityMain };
+module.exports = {
+  entityMain
+}

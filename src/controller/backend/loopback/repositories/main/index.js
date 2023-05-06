@@ -1,11 +1,14 @@
-import * as fs from "fs";
-import { TextTransformation } from "../../../../../../utils/text.transformation";
-import { createRepositoryImports } from "./imports";
-import { setSeedModules } from "./modules";
+const fs = require("fs");
+const { 
+  pascalfy,
+  kebabfy,
+} = require('../../../../../../utils/text.transformation');
+const { createRepositoryImports } = require("./imports");
+const { setSeedModules } = require("./modules");
 
 const repositoryMain = (object, projectPath) => {
   const entityName = object.id;
-  const modelName = TextTransformation.pascalfy(entityName);
+  const modelName = pascalfy(entityName);
 
   let _imports = createRepositoryImports(object);
 
@@ -83,7 +86,7 @@ const repositoryMain = (object, projectPath) => {
  */
 const setDomainEntityArchitectureAndWriteToFile = (object, code, projectPath) => {
   try {
-    const componentFilePath = `${projectPath}-api/src/repositories/mongo/api/${TextTransformation.kebabfy(object.id)}.repository.ts`;
+    const componentFilePath = `${projectPath}-api/src/repositories/mongo/api/${kebabfy(object.id)}.repository.ts`;
     const componentIndexFilePath = `${projectPath}-api/src/repositories/index.ts`;
 
     fs.writeFileSync(
@@ -94,14 +97,16 @@ const setDomainEntityArchitectureAndWriteToFile = (object, code, projectPath) =>
   
     fs.appendFile(
       componentIndexFilePath, 
-      `export * from './mongo/api/${TextTransformation.kebabfy(object.id)}.repository';`, () => { },
+      `export * from './mongo/api/${kebabfy(object.id)}.repository';`, () => { },
       { flag: 'w' }
     );
   
-    console.info(`Repository ${TextTransformation.kebabfy(object.id)} created successfully.`);
+    console.info(`Repository ${kebabfy(object.id)} created successfully.`);
   } catch (err) {
-    console.error(`Create repository ${TextTransformation.kebabfy(object.id)} error: ${err.message}`);
+    console.error(`Create repository ${kebabfy(object.id)} error: ${err.message}`);
   }
 };
 
-export { repositoryMain };
+module.exports = { 
+  repositoryMain,
+};

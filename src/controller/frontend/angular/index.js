@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const utils = require("../../../../../../Utils/index");
+const utils = require("../../../../../../sara/scripts-automation-node/index");
 const projectsPath = path.join(__dirname, "..", "..", "..", "..", "project");
 const {createCodeOverElement} = require("./form/index");
 

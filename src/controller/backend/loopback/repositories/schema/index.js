@@ -1,12 +1,15 @@
-import * as fs from "fs";
-import { TextTransformation } from "../../../../../../utils/text.transformation";
-import { createRepositorySchemaProperties } from "./properties";
+const fs = require("fs");
+const {
+  pascalfy,
+  kebabfy,
+} = require('../../../../../../utils/text.transformation');
+const { createRepositorySchemaProperties } = require("./properties");
 
 const repositorySchemaMain = (object, projectPath) => {
   const schemaName = object.id;
-  const modelName = TextTransformation.pascalfy(schemaName);
+  const modelName = pascalfy(schemaName);
 
-  let _properties = createRepositorySchemaProperties(object, TextTransformation.pascalfy(schemaName));
+  let _properties = createRepositorySchemaProperties(object, pascalfy(schemaName));
 
   let code = `
   import mongoose from 'mongoose';
@@ -45,7 +48,7 @@ const repositorySchemaMain = (object, projectPath) => {
  */
 const setRepositorySchemaArchitectureAndWriteToFile = (object, code, projectPath) => {
   try {
-    const componentFilePath = `${projectPath}-api/src/repositories/mongo/api/schemas/${TextTransformation.kebabfy(object.id)}.schema.ts`;
+    const componentFilePath = `${projectPath}-api/src/repositories/mongo/api/schemas/${kebabfy(object.id)}.schema.ts`;
     
     fs.writeFileSync(
       componentFilePath, 
@@ -53,9 +56,9 @@ const setRepositorySchemaArchitectureAndWriteToFile = (object, code, projectPath
       { flag: 'w' },
     );
 
-    console.info(`Mongoose schema ${TextTransformation.kebabfy(object.id)} created successfully.`);
+    console.info(`Mongoose schema ${kebabfy(object.id)} created successfully.`);
   } catch (err) {
-    console.error(`Create mongoose schema ${TextTransformation.kebabfy(object.id)} error: ${err.message}`);
+    console.error(`Create mongoose schema ${kebabfy(object.id)} error: ${err.message}`);
   }
 };
 

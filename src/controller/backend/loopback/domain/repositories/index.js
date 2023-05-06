@@ -1,9 +1,12 @@
-import * as fs from "fs";
-import { TextTransformation } from "../../../../../../utils/text.transformation";
+const fs = require("fs");
+const { 
+  pascalfy,
+  kebabfy,
+} = require('../../../../../../utils/text.transformation');
 
 const domainRepositoryMain = (object, projectPath) => {
   const entityName = object.id;
-  const modelName = TextTransformation.pascalfy(entityName);
+  const modelName = pascalfy(entityName);
 
   let code = `
   import {${modelName}, I${modelName}} from '../../entities'
@@ -31,7 +34,7 @@ const domainRepositoryMain = (object, projectPath) => {
  */
 const setDomainRepositoryArchitectureAndWriteToFile = (object, code, projectPath) => {
   try {
-    const componentFilePath = `${projectPath}-api/src/domain/repositories/api/${TextTransformation.kebabfy(object.id)}.repository.ts`;
+    const componentFilePath = `${projectPath}-api/src/domain/repositories/api/${kebabfy(object.id)}.repository.ts`;
     const componentIndexFilePath = `${projectPath}-api/src/domain/repositories/api/index.ts`;
 
     fs.writeFileSync(
@@ -42,13 +45,13 @@ const setDomainRepositoryArchitectureAndWriteToFile = (object, code, projectPath
   
     fs.appendFile(
       componentIndexFilePath, 
-      `export * from './${TextTransformation.kebabfy(object.id)}.model';`, (err) => { },
+      `export * from './${kebabfy(object.id)}.model';`, (err) => { },
       { flag: 'w' }
     );
   
-    console.info(`Domain repository ${TextTransformation.kebabfy(object.id)} created successfully.`);
+    console.info(`Domain repository ${kebabfy(object.id)} created successfully.`);
   } catch (err) {
-    console.error(`Create domain repository ${TextTransformation.kebabfy(object.id)} error: ${err.message}`);
+    console.error(`Create domain repository ${kebabfy(object.id)} error: ${err.message}`);
   }
 };
 

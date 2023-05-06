@@ -1,11 +1,11 @@
-import { 
+const { 
   getAllElements,
   booleanTypes, 
   numberTypes, 
   stringTypes,
-} from "../../../utils.backend";
+} = require("../../../utils.backend");
 
-export const createRepositorySchemaProperties = (object, schemaName) => {
+const createRepositorySchemaProperties = (object, schemaName) => {
 
   let code = ``;
 
@@ -72,3 +72,7 @@ const createSchemaPropetyByElement = (element, schemaName) => {
 
   return code;
 };
+
+module.exports = {
+  createRepositorySchemaProperties
+}

@@ -1,11 +1,11 @@
-import { 
+const { 
   getAllElements,
   booleanTypes, 
   numberTypes, 
   stringTypes
-} from "../../../utils.backend";
+} = require("../../../utils.backend");
 
-export const createEntityProperties = (object) => {
+const createEntityProperties = (object) => {
   let code = `
     public _id?: string;
     public _createdBy: string;
@@ -40,3 +40,7 @@ const createPropertiesByElement = (element) => {
 
   return code;
 };
+
+module.exports = {
+  createEntityProperties
+}

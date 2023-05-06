@@ -3,7 +3,7 @@
  * @param   {Array}    elements Elements array
  * @returns {Array}     Array of elements
  */
-export const getAllElements = (elements) => {
+const getAllElements = (elements) => {
     return (elements || [])
         .map(element => {
             if(element.elementType === 'tab') {
@@ -16,7 +16,7 @@ export const getAllElements = (elements) => {
         .flat();    
 }
 
-export const stringTypes = [
+const stringTypes = [
     "email",
     "password",
     "tel",
@@ -31,6 +31,13 @@ export const stringTypes = [
     'datetime-local'
 ];
 
-export const numberTypes = ["number"];
+const numberTypes = ["number"];
 
-export const booleanTypes = ["slide"];
+const booleanTypes = ["slide"];
+
+module.exports = {
+    getAllElements,
+    stringTypes,
+    numberTypes,
+    booleanTypes,
+}

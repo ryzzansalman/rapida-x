@@ -1,11 +1,14 @@
-import * as fs from "fs";
-import { TextTransformation } from "../../../../../../utils/text.transformation";
+const fs = require("fs");
+const { 
+    pascalfy,
+    kebabfy,
+} = require("../../../../../../utils/text.transformation");
 
-export const setSeedModules = (object, projectPath) => {
+const setSeedModules = (object, projectPath) => {
 
     const entityName = object.id;
-    const modelName = TextTransformation.pascalfy(entityName);
-    const routeName = TextTransformation.kebabfy(entityName);
+    const modelName = pascalfy(entityName);
+    const routeName = kebabfy(entityName);
 
     let code = `
     ,{
@@ -23,3 +26,7 @@ const setSeedModuleArchitectureAndWriteToFile = (code, projectPath) => {
     const filePath = `${projectPath}-api/src/utils/seed/Module.json`;
     fs.appendFile(filePath, code, () => { });
 };
+
+module.exports = {
+    setSeedModules
+}
