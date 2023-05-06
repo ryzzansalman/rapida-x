@@ -1,5 +1,5 @@
-const createInputCode = async (objectWithInstructionsToCreateInput) => {
-  const input = objectWithInstructionsToCreateInput;
+const createInputCode = async (project, element) => {
+  const input = element;
   const dataType = input.dataType;
   const name = input.name;
   const label = input.label;
@@ -12,9 +12,8 @@ const createInputCode = async (objectWithInstructionsToCreateInput) => {
   const width = input.width ? input.width : "";
   const isDisabled = input.isDisabled ? "disabled" : "";
   const isAutoFocus = input.isAutoFocus ? input.isAutoFocus : "";
-  const arrayId = mappedArrayInInput ? mappedArrayInInput[mappedArrayInInput.length - 1].name : undefined;
+  // const arrayId = mappedArrayInInput ? mappedArrayInInput[mappedArrayInInput.length - 1].name : undefined;
   const callMethod = input.apiRequest ? setCallToMethodOnFocus(input, mappedArrayInInput) : "";
-  // IInput
   const mask = input.mask ? input.mask : "";
   const isMultipleLines = input.isMultipleLines;
   
@@ -44,8 +43,8 @@ const createInputCode = async (objectWithInstructionsToCreateInput) => {
           ${tooltip} 
           ${isRequired} 
           ${isDisabled} 
-          ${mask} 
-          ${callMethod} 
+          ${mask}
+          ${callMethod}
           autocomplete="new-password">
         </mat-form-field>
         `;

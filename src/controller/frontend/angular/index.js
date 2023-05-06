@@ -4,12 +4,14 @@ const utils = require("../../../../../../Utils/index");
 const projectsPath = path.join(__dirname, "..", "..", "..", "..", "project");
 const {createCodeOverElement} = require("./form/index");
 
+let code = "";
+
 const startAngularCoding = async (project) => {
   const filesInProjectFolderToSetParams = utils.array.createArrayOverFolderFiles(
     `${projectsPath}/${project.folder}`
   );
 
-  await takeObject(project, filesInProjectFolderToSetParams);
+  code += await takeObject(project, filesInProjectFolderToSetParams);
 }
 
 takeObject = (project, filesInProjectFolderToSetParams) => {
@@ -28,7 +30,7 @@ takeElements = async (project, object) => {
       if (key === "elements") {
         const elements = object[key];
         elements.forEach(element => {
-          createCodeOverElement(project,element)
+          createCodeOverElement(project, object, element)
         });
       }
     }

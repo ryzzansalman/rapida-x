@@ -1,7 +1,9 @@
 const {startAngularCoding} = require("./angular/index");
 
+let code = "";
+
 const angular = async (project) => {  
-  await startAngularCoding(project);  
+  code += await startAngularCoding(project);
 }
 
 const svelte = (project) => {

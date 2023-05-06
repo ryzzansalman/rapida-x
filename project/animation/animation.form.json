@@ -19,7 +19,7 @@
             },
             {
               "elementType": "input",
-              "dataType": "text",
+              "dataType": "file",
               "label": "Foto de capa",
               "name": "folderPicture"
             },
