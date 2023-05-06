@@ -67,7 +67,7 @@ createCodeOverMaterialUi = async (project, object, element) => {
     </mat-card-content>
   </mat-card>
   `;
-
+  
   const controller = ``;
 
   const service = ``;
@@ -77,7 +77,7 @@ createCodeOverMaterialUi = async (project, object, element) => {
     controller: controller,
     service: service
   }
-  console.log(result);
+  
   return result;
 }
 

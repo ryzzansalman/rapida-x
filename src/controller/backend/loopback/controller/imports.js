@@ -1,4 +1,4 @@
-import { TextTransformation } from "../../../../../utils/text.transformation";
+import { TextTransformation } from "kunlatek-utils";
 
 export const createControllerImports = (object) => {
   const entityName = object.id;

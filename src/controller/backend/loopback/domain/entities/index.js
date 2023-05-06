@@ -2,7 +2,7 @@ const fs = require("fs");
 const { 
   pascalfy,
   kebabfy,
-} = require("../../../../../../utils/text.transformation");
+} = require("kunlatek-utils");
 const { createConstructor } = require("./constructor");
 const { createEntityInterfaces } = require("./interfaces");
 const { createEntityProperties } = require("./properties");

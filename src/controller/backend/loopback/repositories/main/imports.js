@@ -1,7 +1,7 @@
 const { 
     pascalfy,
     kebabfy,
-} = require("../../../../../../utils/text.transformation");
+} = require("kunlatek-utils");
 
 const createRepositoryImports = (object) => {
 

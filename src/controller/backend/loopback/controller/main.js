@@ -3,7 +3,7 @@ import * as fs from "fs";
 import { createControllerImports } from "./imports";
 import { createControllerConstructorParams } from "./constructor-params";
 import { createControllerMethods } from "./methods";
-import { TextTransformation } from "../../../../../utils/text.transformation";
+import { TextTransformation } from "kunlatek-utils";
 
 const controllerMain = (object, projectPath) => {
   const controllerName = object.id;

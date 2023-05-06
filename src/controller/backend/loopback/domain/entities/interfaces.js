@@ -1,6 +1,6 @@
 const {
   pascalfy
-} = require("../../../../../../utils/text.transformation");
+} = require("kunlatek-utils");
 const { 
   getAllElements,
   booleanTypes,

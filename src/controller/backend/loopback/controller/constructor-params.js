@@ -1,9 +1,9 @@
-import { TextTransformation } from "../../../../../utils/text.transformation";
+import { string } from "kunlatek-utils";
 
 export const createControllerConstructorParams = (object) => {
 
   const entityName = object.id;
-  const modelName = TextTransformation.pascalfy(entityName);
+  const modelName = string.pascalfy(entityName);
 
 
   let code = `

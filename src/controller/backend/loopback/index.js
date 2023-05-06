@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const {
   createArrayOverFolderFiles
-} = require("../../../../utils/array");
+} = require("kunla-utils");
 const projectsPath = path.join(__dirname, "..", "..", "..", "..", "project");
 // const {createCodeOverElement} = require("./form/index");
 

@@ -2,7 +2,7 @@ const fs = require("fs");
 const { 
   pascalfy,
   kebabfy,
-} = require('../../../../../../utils/text.transformation');
+} = require("kunlatek-utils");
 const { createRepositoryImports } = require("./imports");
 const { setSeedModules } = require("./modules");
 
@@ -19,7 +19,7 @@ const repositoryMain = (object, projectPath) => {
     mongoose.connect(
       process.env.MONGO_URL ?? 'mongodb://localhost:27017/kunlatek',
       { dbName: process.env.DB! }
-    ).then(() => console.log('Mongoose: Connected to db!!'))
+    ).then(() => console.info('Mongoose: Connected to db!!'))
   }
 
   export class ${modelName}Repository implements I${modelName}Repository {

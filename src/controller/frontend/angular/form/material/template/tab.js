@@ -7,7 +7,6 @@ const createTabCode = async (project, object, element, createCodeOverMaterialUi)
       const tabElement = tab.elements[j];
       console.info(`Form:Material:Tab - Dealing with elements - ${tab.title} - ${tabElement.elementType}`);
       codeTab += await createCodeOverMaterialUi(project, object, tabElement);
-      console.log(codeTab);
     }
   }
 
