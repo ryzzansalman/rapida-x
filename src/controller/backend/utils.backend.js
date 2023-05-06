@@ -8,12 +8,12 @@ const getAllElements = (elements) => {
         .map(element => {
             if(element.elementType === 'tab') {
                 return element.tabs
-                    .map(tab => tab.elements);
+                    .map(tab => tab.elements).flat();
             } else {
                 return element
             }
         })
-        .flat();    
+        .flat();
 }
 
 const stringTypes = [

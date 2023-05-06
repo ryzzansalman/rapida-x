@@ -1,9 +1,11 @@
-import { TextTransformation } from "../../../../../utils/text.transformation";
+const { 
+  pascalfy
+ } = require("../../../../../utils/text.transformation");
 
-export const createControllerConstructorParams = (object) => {
+const createControllerConstructorParams = (object) => {
 
   const entityName = object.id;
-  const modelName = TextTransformation.pascalfy(entityName);
+  const modelName = pascalfy(entityName);
 
 
   let code = `
@@ -17,3 +19,7 @@ export const createControllerConstructorParams = (object) => {
 
   return code;
 };
+
+module.exports = {
+  createControllerConstructorParams
+}

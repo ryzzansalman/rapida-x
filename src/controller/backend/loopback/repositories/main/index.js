@@ -95,10 +95,9 @@ const setDomainEntityArchitectureAndWriteToFile = (object, code, projectPath) =>
       { flag: 'w' },
     );
   
-    fs.appendFile(
+    fs.appendFileSync(
       componentIndexFilePath, 
-      `export * from './mongo/api/${kebabfy(object.id)}.repository';`, () => { },
-      { flag: 'w' }
+      `export * from './mongo/api/${kebabfy(object.id)}.repository';`,
     );
   
     console.info(`Repository ${kebabfy(object.id)} created successfully.`);

@@ -1,8 +1,11 @@
-import { TextTransformation } from "../../../../../utils/text.transformation";
+const { 
+  pascalfy,
+  kebabfy
+} = require("../../../../../utils/text.transformation");
 
-export const createControllerImports = (object) => {
+const createControllerImports = (object) => {
   const entityName = object.id;
-  const modelName = TextTransformation.pascalfy(entityName);
+  const modelName = pascalfy(entityName);
 
   let code = `
   import {authenticate} from '@loopback/authentication';
@@ -13,11 +16,16 @@ export const createControllerImports = (object) => {
   import {I${modelName}} from '../../domain/entities';
   import {I${modelName}Repository} from '../../domain/repositories';
   import {${modelName}Repository} from '../../repositories';
-  import {${entityName}Schema} from '../../repositories/mongo/api/schemas/${TextTransformation.kebabfy(entityName)}.schema';
-  import {getSwaggerRequestBodySchema, getSwaggerResponseSchema} from '../../utils/general.util';
-  import {IHttpResponse, badRequestErrorHttpResponse, createHttpResponse, notFoundErrorHttpResponse, okHttpResponse} from '../../utils/http-response.util';
+  import {${entityName}Schema} from '../../repositories/mongo/api/schemas/${kebabfy(entityName)}.schema';
+  import {getSwaggerRequestBodySchema, getSwaggerResponseSchema} from '../../utils/general-functions';
+  import {badRequestErrorHttpResponse, createHttpResponse, notFoundErrorHttpResponse, okHttpResponse} from '../../utils/http-response.util';
+  import {IHttpResponse} from '../../interfaces/http.interface';
   
   `;
 
   return code;
 };
+
+module.exports = {
+  createControllerImports
+}

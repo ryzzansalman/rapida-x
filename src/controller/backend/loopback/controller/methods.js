@@ -1,12 +1,16 @@
-import { TextTransformation } from "../../../../../utils/text.transformation";
+const {
+  pascalfy,
+  plurarize,
+  kebabfy,
+} = require("../../../../../utils/text.transformation");
 
-export const createControllerMethods = (object) => {
+const createControllerMethods = (object) => {
   const entityName = object.id;
-  const modelName = TextTransformation.pascalfy(entityName);
-  const routeName = TextTransformation.plurarize(TextTransformation.kebabfy(entityName));
+  const modelName = pascalfy(entityName);
+  const routeName = plurarize(kebabfy(entityName));
 
   let code = `
-  ${object.publicRoutes?.includes('create') ?
+  ${object.publicRoutes && object.publicRoutes.includes('create') ?
       `` :
       `@authenticate({strategy: 'autentikigo', options: {collection: '${modelName}', action: 'createOne'}})`
     }
@@ -39,10 +43,11 @@ export const createControllerMethods = (object) => {
     }
   }
   
-  ${object.publicRoutes?.includes('read') ?
+  ${object.publicRoutes && object.publicRoutes.includes('read') ?
       `` :
       `@authenticate({strategy: 'autentikigo', options: {collection: '${modelName}', action: 'read'}})`
     }
+  @get('/${routeName}')
   @response(200, getSwaggerResponseSchema(${entityName}Schema, true))
   async findAll(
     @param.query.string('filters') filters?: any,
@@ -72,7 +77,7 @@ export const createControllerMethods = (object) => {
     }
   }
   
-  ${object.publicRoutes?.includes('readOne') ?
+  ${object.publicRoutes && object.publicRoutes.includes('readOne') ?
       `` :
       `@authenticate({strategy: 'autentikigo', options: {collection: '${modelName}', action: 'readOne'}})`
     }
@@ -100,7 +105,7 @@ export const createControllerMethods = (object) => {
     }
   }
   
-  ${object.publicRoutes?.includes('update') ?
+  ${object.publicRoutes && object.publicRoutes.includes('update') ?
       `` :
       `@authenticate({strategy: 'autentikigo', options: {collection: '${modelName}', action: 'updateOne'}})`
     }
@@ -130,7 +135,7 @@ export const createControllerMethods = (object) => {
     }
   }
   
-  ${object.publicRoutes?.includes('update') ?
+  ${object.publicRoutes && object.publicRoutes.includes('update') ?
       `` :
       `@authenticate({strategy: 'autentikigo', options: {collection: '${modelName}', action: 'updateOne'}})`
     }
@@ -160,7 +165,7 @@ export const createControllerMethods = (object) => {
     }
   }
   
-  ${object.publicRoutes?.includes('delete') ?
+  ${object.publicRoutes && object.publicRoutes.includes('delete') ?
       `` :
       `@authenticate({strategy: 'autentikigo', options: {collection: '${modelName}', action: 'deleteOne'}})`
     }
@@ -190,3 +195,7 @@ export const createControllerMethods = (object) => {
 
   return code;
 };
+
+module.exports = {
+  createControllerMethods
+}

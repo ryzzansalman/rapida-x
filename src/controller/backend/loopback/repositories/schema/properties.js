@@ -59,11 +59,11 @@ const createSchemaPropetyByElement = (element, schemaName) => {
     //   `;
     // }
   } else if (type === 'array') {
-    code += `${element.name}: [{ type: 'any' }],`;
+    code += `${element.name ?? element.id}: [{ type: 'any' }],`;
   } else {
     code += `
-      ${element.name}: {
-        type: '${propertyType}', // ${element.isUnique ? `validate: [unique('${schemaName}', '${element.name}'), '${element.name} is unique'],` : ``}
+      ${element.name ?? element.id}: {
+        type: '${propertyType}', // ${element.isUnique ? `validate: [unique('${schemaName}', '${element.name ?? element.id}'), '${element.name ?? element.id} is unique'],` : ``}
         required: ${element.isRequired || false},
         ${!element.isRequired ? 'default: null,' : ''}
       },

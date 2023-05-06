@@ -24,7 +24,7 @@ const setSeedModules = (object, projectPath) => {
 
 const setSeedModuleArchitectureAndWriteToFile = (code, projectPath) => {
     const filePath = `${projectPath}-api/src/utils/seed/Module.json`;
-    fs.appendFile(filePath, code, () => { });
+    fs.appendFileSync(filePath, code);
 };
 
 module.exports = {

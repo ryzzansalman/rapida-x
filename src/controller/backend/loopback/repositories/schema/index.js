@@ -13,7 +13,7 @@ const repositorySchemaMain = (object, projectPath) => {
 
   let code = `
   import mongoose from 'mongoose';
-  import {transformSchemaToMongooseModel} from '../../../../utils/general.util';
+  import {transformSchemaToMongooseModel} from '../../../../utils/general-functions';
 
   export const ${schemaName}Schema = {
 
@@ -62,4 +62,6 @@ const setRepositorySchemaArchitectureAndWriteToFile = (object, code, projectPath
   }
 };
 
-export { repositorySchemaMain };
+module.exports = { 
+  repositorySchemaMain 
+};
