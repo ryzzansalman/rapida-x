@@ -3,7 +3,6 @@ const fs = require('fs');
 const {
   createArrayOverFolderFiles
 } = require("../../../../utils/array");
-const projectsPath = path.join(__dirname, "..", "..", "..", "..", "project");
 
 const { domainMain } = require('./domain/index');
 const { repositoriesMain } = require('./repositories/index');
@@ -11,7 +10,7 @@ const { controllerMain } = require('./controller/index');
 
 const startLoopbackCoding = async (project) => {
   const filesInProjectFolderToSetParams = createArrayOverFolderFiles(
-    `${projectsPath}/${project.folder}`
+    `${process.cwd()}/project/${project.folder}`
   );
   await takeObject(project, filesInProjectFolderToSetParams);
 }
@@ -19,9 +18,10 @@ const startLoopbackCoding = async (project) => {
 takeObject = (project, filesInProjectFolderToSetParams) => {
   filesInProjectFolderToSetParams.forEach(async (file) => {
     if (file != '') {
-      const string = fs.readFileSync(`${projectsPath}/${project.folder}/${file}`, "utf8");
+      const string = fs.readFileSync(`${process.cwd()}/project/${project.folder}/${file}`, "utf8");
       const object = JSON.parse(string);
-      await createCode(object, ``);
+      const projectPath = path.join(process.cwd(), "..");
+      await createCode(object, `${projectPath}/${project.folder}-project/${project.folder}`);
     }
   });
 }
