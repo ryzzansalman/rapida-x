@@ -5,26 +5,22 @@ const {
 } = require("../../../../../../utils/text.transformation");
 
 const setSeedModules = (object, projectPath) => {
+    const filePath = `${projectPath}-api/src/utils/seed/Module.json`;
+    const modules = require(filePath) ?? [];
 
     const entityName = object.id;
     const modelName = pascalfy(entityName);
     const routeName = kebabfy(entityName);
 
-    let code = `
-    ,{
-        "name": "${modelName}",
-        "description": "${modelName}",
-        "collectionName": "${modelName}",
-        "route": "${routeName}"
-    }
-    `;
+    modules.push({
+        'name': modelName,
+        'description': modelName,
+        'collection': modelName,
+        'route': `/${routeName}`,
+        'icon': object.icon ?? 'dashboard',
+    });
 
-    setSeedModuleArchitectureAndWriteToFile(code, projectPath);
-};
-
-const setSeedModuleArchitectureAndWriteToFile = (code, projectPath) => {
-    const filePath = `${projectPath}-api/src/utils/seed/Module.json`;
-    fs.appendFileSync(filePath, code);
+    fs.writeFileSync(filePath, JSON.stringify(modules));
 };
 
 module.exports = {
