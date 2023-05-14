@@ -67,7 +67,7 @@ const createPropertyByElement = (element) => {
         )
     );
 
-  code += `${element.name ?? element.id}${!element.isRequired ? '?' : ''}: ${propertyType};`;
+  code += `${element.name ?? element.id}${!element.isRequired ? '?' : ''}: ${propertyType}${element.optionsApi ? ' | any':''};`;
 
   return code;
 };

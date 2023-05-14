@@ -1,3 +1,4 @@
+const { setIdToClassName, pascalfy, singularize } = require("../../../../../../utils/text.transformation");
 const { 
   getAllElements,
   booleanTypes, 
@@ -36,28 +37,33 @@ const createSchemaPropetyByElement = (element, schemaName) => {
     );
 
   if (element.optionsApi && element.optionsApi.endpoint) {
-    // TODO: relation schema properties
-    // const className = TextTransformation.setIdToClassName(TextTransformation.pascalfy(TextTransformation.singularize(value.optionsApi.endpoint.split('-').join(' '))));
+    const className = setIdToClassName(
+      pascalfy(
+        singularize(element.optionsApi.endpoint.split('-').join(' '))
+      )
+    );
 
-    // if (value.isMultiple) {
-    //   code += `
-    //     ${value.name}: [
-    //       {
-    //         type: mongoose.Schema.Types.ObjectId,
-    //         ref: '${className}', ${value.isUnique ? `unique: true,` : ``}
-    //       }
-    //     ],
-    //   `;
-    // } else {
-    //   code += `
-    //     ${value.name}: {
-    //       type: mongoose.Schema.Types.ObjectId,
-    //       ref: '${className}', ${value.isUnique ? `unique: true,` : ``}
-    //       required: ${value.isRequired || false},
-    //       ${!value.isRequired ? 'default: null,' : ''}
-    //     },
-    //   `;
-    // }
+    if (element.isMultiple) {
+      code += `
+        ${element.name}: [
+          {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: '${className}',
+            model: { _id: { type: 'string' } }
+          }
+        ],
+      `;
+    } else {
+      code += `
+        ${element.name}: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: '${className}', 
+          required: ${element.isRequired || false},
+          model: { _id: { type: 'string' } },
+          ${!element.isRequired ? 'default: null,' : ''}
+        },
+      `;
+    }
   } else if (type === 'array') {
     code += `${element.name ?? element.id}: [{ type: 'any' }],`;
   } else {
