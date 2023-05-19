@@ -48,11 +48,10 @@ const setDomainEntityArchitectureAndWriteToFile = (object, code, projectPath) =>
       code, 
       { flag: 'w' },
     );
-  
-    fs.appendFile(
+
+    fs.appendFileSync(
       componentIndexFilePath, 
-      `export * from './${kebabfy(object.id)}.model';`, () => { },
-      { flag: 'w' }
+      `export * from './${kebabfy(object.id)}.model';`,
     );
   
     console.info(`Domain entity ${kebabfy(object.id)} created successfully.`);

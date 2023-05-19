@@ -5,12 +5,14 @@ const {
 } = require("kunlatek-utils");
 const { createRepositoryImports } = require("./imports");
 const { setSeedModules } = require("./modules");
+const { getRelatedProperties } = require("./related-properties");
 
 const repositoryMain = (object, projectPath) => {
   const entityName = object.id;
   const modelName = pascalfy(entityName);
 
-  let _imports = createRepositoryImports(object);
+  const _imports = createRepositoryImports(object);
+  const _relatedProperties = getRelatedProperties(object);
 
   let code = `
   ${_imports}
@@ -31,7 +33,7 @@ const repositoryMain = (object, projectPath) => {
     async findAll(filters: any, limit: number, page: number): Promise<${modelName}[]> {
       return (await ${modelName}MongoModel
         .find(filters)
-        // .populate(getPopulateObjFromSchema('modules', moduleSchema))
+        ${_relatedProperties}
         .skip(page * limit)
         .limit(limit)
       ).map((data: any) => new ${modelName}(data));
@@ -40,7 +42,7 @@ const repositoryMain = (object, projectPath) => {
     async findById(id: string): Promise<${modelName}> {
       const data = await ${modelName}MongoModel
         .findById(id)
-        //.populate(getPopulateObjFromSchema('modules', moduleSchema))
+        ${_relatedProperties}
         .orFail(new HttpErrors[404]('${modelName} not found'));
 
       return new ${modelName}(data);
@@ -49,7 +51,7 @@ const repositoryMain = (object, projectPath) => {
     async updateById(id: string, dataToUpdate: Partial<I${modelName}>): Promise<${modelName}> {
       const data = await ${modelName}MongoModel
         .findByIdAndUpdate(id, dataToUpdate, {new: true})
-        //.populate(getPopulateObjFromSchema('modules', moduleSchema))
+        ${_relatedProperties}
         .orFail(new HttpErrors[404]('${modelName} not found'));
 
       return new ${modelName}(data);
@@ -58,7 +60,7 @@ const repositoryMain = (object, projectPath) => {
     async replaceById(id: string, dataToUpdate: I${modelName}): Promise<${modelName}> {
       const data = await ${modelName}MongoModel
         .findOneAndReplace({_id: id}, dataToUpdate, {new: true})
-        //.populate(getPopulateObjFromSchema('modules', moduleSchema))
+        ${_relatedProperties}
         .orFail(new HttpErrors[404]('${modelName} not found'));
 
       return new ${modelName}(data);
@@ -95,10 +97,9 @@ const setDomainEntityArchitectureAndWriteToFile = (object, code, projectPath) =>
       { flag: 'w' },
     );
   
-    fs.appendFile(
+    fs.appendFileSync(
       componentIndexFilePath, 
-      `export * from './mongo/api/${kebabfy(object.id)}.repository';`, () => { },
-      { flag: 'w' }
+      `export * from './mongo/api/${kebabfy(object.id)}.repository';`,
     );
   
     console.info(`Repository ${kebabfy(object.id)} created successfully.`);

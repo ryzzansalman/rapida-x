@@ -43,10 +43,9 @@ const setDomainRepositoryArchitectureAndWriteToFile = (object, code, projectPath
       { flag: 'w' },
     );
   
-    fs.appendFile(
+    fs.appendFileSync(
       componentIndexFilePath, 
-      `export * from './${kebabfy(object.id)}.model';`, (err) => { },
-      { flag: 'w' }
+      `export * from './${kebabfy(object.id)}.repository';`,
     );
   
     console.info(`Domain repository ${kebabfy(object.id)} created successfully.`);
@@ -55,4 +54,6 @@ const setDomainRepositoryArchitectureAndWriteToFile = (object, code, projectPath
   }
 };
 
-export { domainRepositoryMain };
+module.exports = { 
+  domainRepositoryMain,
+};

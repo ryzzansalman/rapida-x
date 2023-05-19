@@ -22,6 +22,8 @@ const createEntityProperties = (object) => {
 };
 
 const createPropertiesByElement = (element) => {
+  let code = ``;
+  
   const type = element.dataType;
 
   const propertyType = element.isMultiple || type === 'array' || type === 'file' ?
@@ -36,7 +38,7 @@ const createPropertiesByElement = (element) => {
         )
     );
 
-  code += `public ${element.name}${!element.isRequired ? '?' : ''}: ${propertyType};`;
+  code += `public ${element.name ?? element.id}${!element.isRequired ? '?' : ''}: ${propertyType}${element.optionsApi ? ' | any':''};`;
 
   return code;
 };

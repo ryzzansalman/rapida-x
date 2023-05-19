@@ -2,13 +2,15 @@ const path = require('path');
 const fs = require('fs');
 const {
   createArrayOverFolderFiles
-} = require("kunla-utils");
-const projectsPath = path.join(__dirname, "..", "..", "..", "..", "project");
-// const {createCodeOverElement} = require("./form/index");
+} = require("../../../../utils/array");
+
+const { domainMain } = require('./domain/index');
+const { repositoriesMain } = require('./repositories/index');
+const { controllerMain } = require('./controller/index');
 
 const startLoopbackCoding = async (project) => {
   const filesInProjectFolderToSetParams = createArrayOverFolderFiles(
-    `${projectsPath}/${project.folder}`
+    `${process.cwd()}/project/${project.folder}`
   );
   await takeObject(project, filesInProjectFolderToSetParams);
 }
@@ -16,37 +18,24 @@ const startLoopbackCoding = async (project) => {
 takeObject = (project, filesInProjectFolderToSetParams) => {
   filesInProjectFolderToSetParams.forEach(async (file) => {
     if (file != '') {
-      const string = fs.readFileSync(`${projectsPath}/${project.folder}/${file}`, "utf8");
+      const string = fs.readFileSync(`${process.cwd()}/project/${project.folder}/${file}`, "utf8");
       const object = JSON.parse(string);
-      await takeElements(project, object);
+      const projectPath = path.join(process.cwd(), "..");
+      await createCode(object, `${projectPath}/${project.folder}-project/${project.folder}`);
     }
   });
 }
 
-takeElements = async (project, object) => {
+createCode = async (object, projectPath) => {
   if (object.kind !== 'form') {
     console.info("Only forms set here");
     return ``;
   }
-  
-  for (const key in object) {
-    if (Object.hasOwnProperty.call(object, key)) {
-      if (key === "elements") {
-        const elements = object[key];
-        elements.forEach(element => {
-          console.log(element)
-          // createCodeOverElement(project,element)
-        });
-      }
-    }
-  }
-}
 
-startLoopbackCoding({
-  folder: "animation",
-  title: "Animação",
-  ui: "material"
-})
+  domainMain(object, projectPath);
+  repositoriesMain(object, projectPath);
+  controllerMain(object, projectPath);
+}
 
 module.exports = {
   startLoopbackCoding

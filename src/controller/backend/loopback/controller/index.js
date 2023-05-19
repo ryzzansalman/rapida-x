@@ -1,9 +1,12 @@
-import * as fs from "fs";
+const fs = require("fs");
 
-import { createControllerImports } from "./imports";
-import { createControllerConstructorParams } from "./constructor-params";
-import { createControllerMethods } from "./methods";
-import * as utils from "kunlatek-utils";
+const { createControllerImports } = require("./imports");
+const { createControllerConstructorParams } = require("./constructor-params");
+const { createControllerMethods } = require("./methods");
+const { 
+  pascalfy,
+  kebabfy
+} = require("../../../../../utils/text.transformation");
 
 const controllerMain = (object, projectPath) => {
   const controllerName = object.id;
@@ -14,7 +17,7 @@ const controllerMain = (object, projectPath) => {
   let code = `
   ${_imports}
 
-  export class ${utils.pascalfy(controllerName)}Controller {  
+  export class ${pascalfy(controllerName)}Controller {  
     constructor(
       ${_constructorParams}
     ) { }
@@ -36,7 +39,7 @@ const controllerMain = (object, projectPath) => {
  */
 const setControllerArchitectureAndWriteToFile = (object, code, projectPath) => {
   try {
-    const componentFilePath = `${projectPath}-api/src/controllers/api/${utils.kebabfy(object.id)}.controller.ts`;
+    const componentFilePath = `${projectPath}-api/src/controllers/api/${kebabfy(object.id)}.controller.ts`;
     const componentIndexFilePath = `${projectPath}-api/src/controllers/index.ts`;
 
     fs.writeFileSync(
@@ -45,16 +48,17 @@ const setControllerArchitectureAndWriteToFile = (object, code, projectPath) => {
       { flag: 'w' },
     );
   
-    fs.appendFile(
+    fs.appendFileSync(
       componentIndexFilePath, 
-      `export * from './api/${utils.kebabfy(object.id)}.controller';`, () => { },
-      { flag: 'w' }
+      `export * from './api/${kebabfy(object.id)}.controller';`,
     );
   
-    console.info(`Controller ${utils.kebabfy(object.id)} created successfully.`);
+    console.info(`Controller ${kebabfy(object.id)} created successfully.`);
   } catch (err) {
-    console.error(`Create controller ${utils.kebabfy(object.id)} error: ${err.message}`);
+    console.error(`Create controller ${kebabfy(object.id)} error: ${err.message}`);
   }
 };
 
-export { controllerMain };
+module.exports = { 
+  controllerMain 
+};

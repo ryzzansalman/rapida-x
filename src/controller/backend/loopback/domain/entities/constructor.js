@@ -12,7 +12,7 @@ const createConstructor = (object) => {
   const elements = getAllElements(object.elements);
 
   elements.forEach((element) => {
-    code += `this.${element.name} = entity.${element.name};`;
+    code += `this.${element.name ?? element.id} = entity.${element.name ?? element.id};`;
   });
 
   return code;
